@@ -1,0 +1,1074 @@
+{
+	"info": {
+		"_postman_id": "f72a0021-aca7-4b07-901b-d72db81877b1",
+		"name": "Warpspeed Blog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29382312",
+		"_collection_link": "https://red-firefly-951123.postman.co/workspace/My-Workspace~468dd825-3f0a-4f7d-8ec7-9f73c6501311/collection/29382312-f72a0021-aca7-4b07-901b-d72db81877b1?action=share&source=collection_link&creator=29382312"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Talk about pre and post request ",
+									"// Talk about snippets and using the Post bot",
+									"// This is using test syntax from chai",
+									"",
+									"const newEmail = `somto${(Math.random()*2000)}@gmail.com`;",
+									"pm.environment.set(\"test_email\",newEmail);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for positive response",
+									"pm.test(\"Status must be 200\",function(){",
+									"    pm.response.to.have.status(200)",
+									"})",
+									"",
+									"//validate return data on success",
+									"pm.test(\"Valid registration data\",function(){",
+									"    const result = pm.response.json();",
+									"    const {user} = result.data;",
+									"    pm.expect(result.status).to.be.true;",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"somto\",\n    \"email\": \"test@gmail.com\",\n    \"password\": \"secret\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201 Ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"somto\",\n    \"email\": \"test@gmail.com\",\n    \"password\": \"secret\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/user/register",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "377"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"179-t5q9z0bTsje7JwrDNfq9VC3aWcc\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 19 Jul 2024 12:21:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Successfully registered user\",\n    \"status\": true,\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"username\": \"somto\",\n            \"email\": \"test@gmail.com\",\n            \"createdAt\": \"2024-07-19T12:21:32.691Z\",\n            \"updatedAt\": \"2024-07-19T12:21:32.691Z\"\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJzb210byIsImlhdCI6MTcyMTM5MTY5MywiZXhwIjoxNzIxMzkxNzUzfQ.lntUlxssZn4Jh2e5QEK-Hy0vOj0DojNxp7ylqz29V9k\"\n    }\n}"
+						},
+						{
+							"name": "400 Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"somto\",\n    \"email\": \"test@gmail.com\",\n    \"password\": \"secret\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/user/register",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "68"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"44-ervpnnvdwWeyGtIOMbuyi1tcpu0\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 19 Jul 2024 12:23:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User with username somto already exists\",\n    \"status\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"user_jwt\",\"\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//test for 200 ",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Test for valid data\",function(){",
+									"    const result = pm.response.json();",
+									"    const {token} =  result.data;",
+									"    pm.expect(token).to.not.be.empty;",
+									"    pm.environment.set(\"user_jwt\",token);",
+									"})",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"somto\",\n    \"password\": \"secret\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201 Ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"somto\",\n    \"password\": \"secret\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/user/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "365"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"16d-fY+7We3odJyjol/lW0Il/3I33Vo\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 19 Jul 2024 12:29:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Login successful\",\n    \"status\": true,\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"username\": \"somto\",\n            \"email\": \"test@gmail.com\",\n            \"createdAt\": \"2024-07-19T12:21:32.691Z\",\n            \"updatedAt\": \"2024-07-19T12:21:32.691Z\"\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJzb210byIsImlhdCI6MTcyMTM5MjE1MiwiZXhwIjoxNzIxMzkyMjEyfQ.OyeEif6mMcAG3TCwp3NTy-4nhdETvUotFfLBUzMmi30\"\n    }\n}"
+						},
+						{
+							"name": "400 Bad Bequest",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"somto\",\n    \"password\": \"secret1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/user/login",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "49"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"31-Ti4Sj0je2o9MgRrkSd2TdnyXCgo\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 19 Jul 2024 12:29:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Invalid Login Detail\",\n    \"status\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Profile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200  Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/user/profile",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"user",
+										"profile"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "261"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"105-G0yOgeLE09XnEtTM8VY3HDZagIs\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 19 Jul 2024 12:32:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User fetched successfully.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"username\": \"somto\",\n            \"email\": \"test@gmail.com\",\n            \"password\": \"$2a$10$t5HbCV1/zOnryEv6WwNRueEkqGXYJkIZjLGC4iZIca.8OZ./S5imm\",\n            \"createdAt\": \"2024-07-19T12:21:32.691Z\",\n            \"updatedAt\": \"2024-07-19T12:21:32.691Z\"\n        }\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "Create Post",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Talk about pre and post request ",
+									"// Talk about snippets and using the Post bot",
+									"// This is using test syntax from chai",
+									"",
+									"const newEmail = `somto${(Math.random()*2000)}@gmail.com`;",
+									"pm.environment.set(\"test_email\",newEmail);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test for positive response",
+									"pm.test(\"Status must be 200\",function(){",
+									"    pm.response.to.have.status(200)",
+									"})",
+									"",
+									"//validate return data on success",
+									"pm.test(\"Valid registration data\",function(){",
+									"    const result = pm.response.json();",
+									"    const {user} = result.data;",
+									"    pm.expect(result.status).to.be.true;",
+									"    pm.expect(user.email).to.equal(pm.environment.get(\"test_email\"));",
+									"    pm.expect(user.accountStatus).to.equal(\"ACTIVE\");",
+									"    pm.expect(user.role).to.equal(\"CUSTOMER\");",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Why AI is the future\",\n    \"content\": \"Artificial intelligence (AI), the ability of a digital computer or computer-controlled robot to perform tasks commonly associated \"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/post/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Why AI is the future\",\n    \"content\": \"Artificial intelligence (AI), the ability of a digital computer or computer-controlled robot to perform tasks commonly associated \"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/post/create",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"post",
+										"create"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "397"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"18d-toPLXzjs0rdgDoQ0IxEX0Ddv+5g\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 19 Jul 2024 12:40:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Successfully created post\",\n    \"status\": true,\n    \"data\": {\n        \"post\": {\n            \"id\": 2,\n            \"slug\": \"why-ai-is-the-future-3\",\n            \"title\": \"why ai is the future\",\n            \"content\": \"Artificial intelligence (AI), the ability of a digital computer or computer-controlled robot to perform tasks commonly associated \",\n            \"status\": \"PUBLISHED\",\n            \"creatorId\": 1,\n            \"createdAt\": \"2024-07-19T12:40:09.653Z\",\n            \"updatedAt\": \"2024-07-19T12:40:09.653Z\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Edit Post",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"user_jwt\",\"\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//test for 200 ",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Test for valid data\",function(){",
+									"    const result = pm.response.json();",
+									"    const {token} =  result.data;",
+									"    pm.expect(token).to.not.be.empty;",
+									"    pm.environment.set(\"user_jwt\",token);",
+									"})",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"postId\":2,\n    \"title\": \"Why AI is the future 1.0\",\n    \"content\": \"Artificial intelligence (AI), the ability of a digital computer or computer-controlled robot to perform tasks commonly associated \"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/post/edit",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post",
+								"edit"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 Ok",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"postId\":2,\n    \"title\": \"Why AI is the future 1.0\",\n    \"content\": \"Artificial intelligence (AI), the ability of a digital computer or computer-controlled robot to perform tasks commonly associated \"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/post/edit",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"post",
+										"edit"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "409"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"199-Y9t/7IrU6Jl5W4fVSd3/8SYHxTA\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 19 Jul 2024 12:47:22 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Successfully edited post\",\n    \"status\": true,\n    \"data\": {\n        \"post\": {\n            \"id\": 2,\n            \"slug\": \"why-ai-is-the-future-1.0-842652\",\n            \"title\": \"why ai is the future 1.0\",\n            \"content\": \"Artificial intelligence (AI), the ability of a digital computer or computer-controlled robot to perform tasks commonly associated \",\n            \"status\": \"PUBLISHED\",\n            \"creatorId\": 1,\n            \"createdAt\": \"2024-07-19T12:40:09.653Z\",\n            \"updatedAt\": \"2024-07-19T12:47:21.632Z\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJzb210byIsImlhdCI6MTcyMTM5NDE1MSwiZXhwIjoxNzIxMzk0MjExfQ.JSzuDJ1KzuGS5Exge9e6NCNh57fqbDDsKgg_lKb84T0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"judeugwu606@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/post/delete-post/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post",
+								"delete-post",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 Ok",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"judeugwu606@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/post/delete-post/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"post",
+										"delete-post",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "395"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"18b-UE/6D5EruiSaELE15wQ40RD3QRM\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 19 Jul 2024 13:03:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Successfully deleted post\",\n    \"status\": true,\n    \"data\": {\n        \"post\": {\n            \"id\": 1,\n            \"slug\": \"why-ai-is-the-future\",\n            \"title\": \"why ai is the future\",\n            \"content\": \"Artificial intelligence (AI), the ability of a digital computer or computer-controlled robot to perform tasks commonly associated \",\n            \"status\": \"PUBLISHED\",\n            \"creatorId\": 1,\n            \"createdAt\": \"2024-07-19T12:37:50.377Z\",\n            \"updatedAt\": \"2024-07-19T12:37:50.377Z\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Fetch Single Post",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJzb210byIsImlhdCI6MTcyMTM5Mzc4MSwiZXhwIjoxNzIxMzkzODQxfQ.JmeJTzOX9x5cMxRXv8RqnBOk4mkOr71RFtd47ZNuhDw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"judeugwu606@gmail.com\",\n    \"password\": \"secret1\",\n    \"code\":\"JJMJXW\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/post/why-ai-is-the-future-1.0-951809",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post",
+								"why-ai-is-the-future-1.0-951809"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"judeugwu606@gmail.com\",\n    \"password\": \"secret1\",\n    \"code\":\"JJMJXW\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/post/why-ai-is-the-future-1.0-951809",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"post",
+										"why-ai-is-the-future-1.0-951809"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "397"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"18d-iEE7DbRPXS/2sv7WNSfj2p48+1c\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 19 Jul 2024 12:56:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Post fetched\",\n    \"status\": true,\n    \"data\": {\n        \"post\": {\n            \"id\": 2,\n            \"slug\": \"why-ai-is-the-future-1.0-951809\",\n            \"title\": \"why ai is the future 1.0\",\n            \"content\": \"Artificial intelligence (AI), the ability of a digital computer or computer-controlled robot to perform tasks commonly associated \",\n            \"status\": \"PUBLISHED\",\n            \"creatorId\": 1,\n            \"createdAt\": \"2024-07-19T12:40:09.653Z\",\n            \"updatedAt\": \"2024-07-19T12:48:19.694Z\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Fetch All Post",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJzb210byIsImlhdCI6MTcyMTM5MzU3OSwiZXhwIjoxNzIxMzkzNjM5fQ.dTGAkr1Fs83A3x2PeXPdE4qnKt5f2bE68wsAc-_42Po",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"skip\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/post/all-post",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"post",
+								"all-post"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201 Ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"skip\": 0\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/post/all-post",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"post",
+										"all-post"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "727"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2d7-F3Dsz/8fiwtbGbLc/hmG4Xba22E\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 19 Jul 2024 12:53:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Posts fetched\",\n    \"status\": true,\n    \"data\": {\n        \"posts\": [\n            {\n                \"id\": 2,\n                \"slug\": \"why-ai-is-the-future-1.0-951809\",\n                \"title\": \"why ai is the future 1.0\",\n                \"content\": \"Artificial intelligence (AI), the ability of a digital computer or computer-controlled robot to perform tasks commonly associated \",\n                \"status\": \"PUBLISHED\",\n                \"creatorId\": 1,\n                \"createdAt\": \"2024-07-19T12:40:09.653Z\",\n                \"updatedAt\": \"2024-07-19T12:48:19.694Z\"\n            },\n            {\n                \"id\": 1,\n                \"slug\": \"why-ai-is-the-future\",\n                \"title\": \"why ai is the future\",\n                \"content\": \"Artificial intelligence (AI), the ability of a digital computer or computer-controlled robot to perform tasks commonly associated \",\n                \"status\": \"PUBLISHED\",\n                \"creatorId\": 1,\n                \"createdAt\": \"2024-07-19T12:37:50.377Z\",\n                \"updatedAt\": \"2024-07-19T12:37:50.377Z\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
