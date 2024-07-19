@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 
-export const hash = (data: string): string  => {
+export  const hash = async (data: string): Promise<string>  => {
     return bcrypt.hash(data, bcrypt.genSaltSync(10, "a"));
 }
 
@@ -17,5 +17,11 @@ export const formatResponse = (message:string = '', data:object = {}, status:boo
 }
    
 export const sluggify = (data:string) => {
-    return data.replace(/\s+/g, '-');
+    return `${data.replace(/\s+/g, '-')}-${getRandomNumber(6)}`;
+}
+
+function getRandomNumber(length:number) {
+    const min = Math.pow(10, length - 1);
+    const max = Math.pow(10, length) - 1;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }

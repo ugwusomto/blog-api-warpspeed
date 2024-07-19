@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Post, Prisma } from '@prisma/client';
 import { FetchAllPostFilter } from 'src/config/index.types';
+import { POST_STATUS } from 'src/config/index.enum';
 
 
 
@@ -12,7 +13,7 @@ export class PostService {
 
 
     async fetchAllPost(skip: number = 0): Promise<Post[] | null> {
-        const result = this.prisma.post.findMany({ skip, take: 30, orderBy: { id: "desc" } });
+        const result = this.prisma.post.findMany({ skip, take: 30, orderBy: { id: "desc" },where:{status:POST_STATUS.PUBLISHED} });
         return result;
     }
 

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Request, Put, NotFoundException } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Request, Put, NotFoundException, HttpException, HttpStatus } from '@nestjs/common';
 import { PostService } from './post.service';
 import { formatResponse, sluggify } from 'src/utils/index.utils';
 import { CreatePostDTO, EditPostDTO, GetAllPostDTO } from 'src/dtos/post.dto';
@@ -14,7 +14,7 @@ export class PostController {
         this.postService = _postService
     }
 
-    @Post("/create")
+    @Post("create")
     async createPost(@Request() req, @Body() params: CreatePostDTO) {
         try {
             const { user } = req;
@@ -32,11 +32,11 @@ export class PostController {
             const post = await this.postService.createPost(newPost);
             return formatResponse("Successfully created post", { post }, true);
         } catch (error) {
-            return formatResponse(error.message, {}, false);
+            throw new HttpException(formatResponse(error.message, {}, false), HttpStatus.BAD_REQUEST);
         }
     }
 
-    @Put("/edit")
+    @Put("edit")
     async editPost(@Request() req, @Body() params: EditPostDTO) {
         try {
             const { user } = req;
@@ -55,45 +55,49 @@ export class PostController {
             post = await this.postService.updatePost({ id: params.postId, creatorId: user.id }, editedPost);
             return formatResponse("Successfully edited post", { post }, true);
         } catch (error) {
-            return formatResponse(error.message, {}, false);
+            throw new HttpException(formatResponse(error.message, {}, false), HttpStatus.BAD_REQUEST);
+
         }
     }
 
     @Delete("delete-post/:postId")
-    async deletePost(@Request() req, @Param("postId") postId: number) {
+    async deletePost(@Request() req, @Param("postId") postId: string) {
         try {
             const { user } = req;
-            let post = await this.postService.fetchPostByField({ id: postId, creatorId: user.id });
+            let post = await this.postService.fetchPostByField({ id: parseInt(postId), creatorId: user.id });
             if (!post) {
                 throw new NotFoundException("Post not found");
             }
-            post = await this.postService.deletePost(postId);
+            post = await this.postService.deletePost(parseInt(postId));
             return formatResponse("Successfully deleted post", { post }, true);
         } catch (error) {
-            return formatResponse(error.message, {}, false);
+            throw new HttpException(formatResponse(error.message, {}, false), HttpStatus.BAD_REQUEST);
+
         }
     }
 
-    @Get("all-post")
+    @Post("all-post")
     async getAllPost(@Body() params: GetAllPostDTO) {
         try {
             let posts = await this.postService.fetchAllPost(params.skip);
             return formatResponse("Posts fetched", { posts }, true);
         } catch (error) {
-            return formatResponse(error.message, {}, false);
+            throw new HttpException(formatResponse(error.message, {}, false), HttpStatus.BAD_REQUEST);
+
         }
     }
 
     @Get(":slug")
     async getPost(@Param("slug") slug: string) {
         try {
-            let post = await this.postService.fetchPostByField({ slug });
+            let post = await this.postService.fetchPostByField({ slug , status:POST_STATUS.PUBLISHED});
             if (!post) {
                 throw new NotFoundException("Post not found");
             }
             return formatResponse("Post fetched", { post }, true);
         } catch (error) {
-            return formatResponse(error.message, {}, false);
+            throw new HttpException(formatResponse(error.message, {}, false), HttpStatus.BAD_REQUEST);
+
         }
     }
 }

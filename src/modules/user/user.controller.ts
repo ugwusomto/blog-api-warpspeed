@@ -1,4 +1,4 @@
-import { Body, ConflictException, Controller, Get, Request, NotFoundException, Post } from '@nestjs/common';
+import { Body, ConflictException, Controller, Get, Request, NotFoundException, Post, HttpStatus, HttpException } from '@nestjs/common';
 import { UserService } from './user.service';
 import { compareHash, formatResponse } from 'src/utils/index.utils';
 import { Public } from 'src/decorators';
@@ -33,7 +33,7 @@ export class UserController {
       const token = await this.jwtService.signAsync({ id: user.id, username })
       return formatResponse("Successfully registered user", { user, token }, true);
     } catch (error) {
-      return formatResponse(error.message, {}, false);
+      throw new HttpException(formatResponse(error.message, {}, false), HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -46,7 +46,8 @@ export class UserController {
       if (!user) {
         throw new NotFoundException("Invalid Login Detail");
       }
-      const isPassword = compareHash(user.password, password);
+      const isPassword = compareHash(password ,user.password);
+
       if (!isPassword) {
         throw new NotFoundException("Invalid Login Detail");
       }
@@ -54,7 +55,8 @@ export class UserController {
       const token = await this.jwtService.signAsync({ id: user.id, username })
       return formatResponse("Login successful", { user, token }, true);
     } catch (error) {
-      return formatResponse(error.message, {}, false);
+      throw new HttpException(formatResponse(error.message, {}, false), HttpStatus.BAD_REQUEST);
+
     }
   }
 
@@ -69,7 +71,8 @@ export class UserController {
         }
       };
     } catch (error) {
-      return formatResponse(error.message, {}, false);
+      throw new HttpException(formatResponse(error.message, {}, false), HttpStatus.BAD_REQUEST);
+
     }
   }
 
