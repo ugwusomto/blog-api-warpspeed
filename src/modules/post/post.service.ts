@@ -1,19 +1,50 @@
 import { Injectable } from '@nestjs/common';
-import { Post } from 'src/types';
 import { PrismaService } from '../prisma/prisma.service';
+import { Post, Prisma } from '@prisma/client';
+import { FetchAllPostFilter } from 'src/config/index.types';
+
+
 
 @Injectable()
 export class PostService {
 
-    constructor(private prisma:PrismaService){}
+    constructor(private prisma: PrismaService) { }
 
 
-    async fetchPostById():Promise<Post|null>{
-        return null;
+    async fetchAllPost(skip: number = 0): Promise<Post[] | null> {
+        const result = this.prisma.post.findMany({ skip, take: 30, orderBy: { id: "desc" } });
+        return result;
     }
 
-    async createPost():Promise<Post|null>{
-        return null;
+    async fetchPostByField(fields: Partial<Post>): Promise<Post | null> {
+        const result = this.prisma.post.findFirst({
+            where: { ...fields },
+        });
+        return result;
+    }
+
+
+    async createPost(data: Prisma.PostCreateInput): Promise<Post | null> {
+        const result = this.prisma.post.create({
+            data
+        });
+        return result;
+    }
+
+    async updatePost(where: Prisma.PostWhereUniqueInput, data: Prisma.PostUpdateInput
+    ): Promise<Post | null> {
+        const result = this.prisma.post.update({
+            data,
+            where,
+        });
+        return result;
+    }
+
+    async deletePost(id: number): Promise<Post> {
+        const result = this.prisma.post.delete({
+            where: { id },
+        });
+        return result;
     }
 
 }

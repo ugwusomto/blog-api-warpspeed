@@ -1,20 +1,35 @@
 import { Injectable } from '@nestjs/common';
-import { User } from 'src/types';
 import { PrismaService } from '../prisma/prisma.service';
-import { JwtService } from '@nestjs/jwt';
+import { Prisma, User } from '@prisma/client';
+import { hash } from 'src/utils/index.utils';
 
 
 @Injectable()
 export class UserService {
 
-    constructor(private prisma:PrismaService , private jwtService:JwtService){}
+    constructor(private prisma: PrismaService) { }
 
-    async fetchUserByEmail():Promise<User|null>{
-        return null;
+
+    async fetchUserByField(fields: Partial<User>): Promise<User | null> {
+        const result = this.prisma.user.findFirst({
+            where: { ...fields },
+        });
+        return result;
     }
 
-    async createUser():Promise<User|null>{
-        return null;
+    async fetchUserByUsername(username: string): Promise<User | null> {
+        const result = this.prisma.user.findFirst({
+            where: { username },
+        });
+        return result;
+    }
+
+    async createUser(data: Prisma.UserCreateInput): Promise<User | null> {
+        data.password = hash(data.password);
+        const result = this.prisma.user.create({
+            data,
+        });
+        return result;
     }
 
 }

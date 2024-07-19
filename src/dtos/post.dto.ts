@@ -19,7 +19,7 @@ export class EditPostDTO {
 
     @IsNumber()
     @IsNotEmpty()
-    id: number;
+    postId: number;
 
     @IsString()
     @IsNotEmpty()
@@ -28,5 +28,12 @@ export class EditPostDTO {
     @IsString()
     @IsNotEmpty()
     content: string;
+}
+
+export class GetAllPostDTO {
+
+    @IsNumber()
+    skip: number;
+
 }
 

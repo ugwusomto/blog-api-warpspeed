@@ -27,6 +27,6 @@ model  Post{
     status String
     creatorId Int
     creator User @relation(fields: [creatorId], references: [id])
-    createdAt String
-    updatedAt String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
