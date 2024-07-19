@@ -10,8 +10,7 @@ datasource db {
 
 model User{
     id Int @default(autoincrement()) @id
-    firstname String
-    lastname String
+    username String
     email String
     password String
     posts Post[]
