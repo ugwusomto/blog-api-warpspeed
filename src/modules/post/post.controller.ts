@@ -1,39 +1,40 @@
-import { Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { PostService } from './post.service';
-import { formatResponse } from 'src/utils';
+import { formatResponse } from 'src/utils/index.utils';
+import { CreatePostDTO, EditPostDTO } from 'src/dtos/post.dto';
 
 @Controller('post')
 export class PostController {
 
-    postService:PostService;
+    postService: PostService;
 
-    constructor(_postService:PostService){
-      this.postService = _postService
+    constructor(_postService: PostService) {
+        this.postService = _postService
     }
-  
+
     @Post("/create")
-    createPost(){
-        return formatResponse("Successfully created post",{},true);
-    }
-  
-    @Post("/edit")
-    editPost(){
-        return formatResponse("Successfully editted post",{},true);
-  
+    createPost(@Body() params: CreatePostDTO) {
+        return formatResponse("Successfully created post", {}, true);
     }
 
-    @Delete("delete-post")
-    deletePost(){
-        return formatResponse("Successfully edited post",{},true);
+    @Put("/edit")
+    editPost(@Body() params: EditPostDTO) {
+        return formatResponse("Successfully editted post", {}, true);
+
     }
-  
+
+    @Delete("delete-post/:postId")
+    deletePost(@Param("postId") postId: number) {
+        return formatResponse("Successfully edited post", {}, true);
+    }
+
     @Get("all-post")
-    getAllPost(){
-        return formatResponse("Posts fetched",{},true);
+    getAllPost() {
+        return formatResponse("Posts fetched", {}, true);
     }
 
-    @Get(":id")
-    getPost(@Param("id") id:string){
-        return formatResponse("Post fetched",{},true);
+    @Get(":postSlug")
+    getPost(@Param("postSlug") id: string) {
+        return formatResponse("Post fetched", {}, true);
     }
 }

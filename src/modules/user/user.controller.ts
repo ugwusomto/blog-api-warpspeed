@@ -1,31 +1,32 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UserService } from './user.service';
-import { formatResponse } from 'src/utils';
+import { formatResponse } from 'src/utils/index.utils';
 import { Public } from 'src/decorators';
+import { LoginUserDTO, RegisterUserDTO } from 'src/dtos/user.dto';
 
 @Controller('user')
 export class UserController {
-  userService:UserService;
+  userService: UserService;
 
-  constructor(_userService:UserService){
+  constructor(_userService: UserService) {
     this.userService = _userService
   }
 
   @Public()
   @Post("register")
-  register(){
-    return formatResponse("Successfully registered user",{},true);
+  register(@Body() params: RegisterUserDTO) {
+    return formatResponse("Successfully registered user", {}, true);
   }
 
   @Public()
   @Post("login")
-  login(){
-    return formatResponse("Successfully loggedIn user",{},true);
+  login(@Body() params: LoginUserDTO) {
+    return formatResponse("Successfully loggedIn user", {}, true);
   }
 
   @Get("profile")
-  profile(){
-    return formatResponse("Successfully fetched user profile",{},true);
+  profile() {
+    return formatResponse("Successfully fetched user profile", {}, true);
   }
 
 }
